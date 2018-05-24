@@ -6,6 +6,7 @@
 //
 
 #include <stdio.h>
+#include "input_parser.hpp"
 
 using namespace std;
 
@@ -16,7 +17,6 @@ int main(int argc, const char* argv[]){
     if(argc != 2) {
         return 1;
     }
-    
-    Input_Parser
+    Input_Parser inputParser = new Input_Parser(argv[1]);
     return 0;
 }
