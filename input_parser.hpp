@@ -16,6 +16,7 @@ class Input_Parser {
     
 public:
     Input_Parser(std::string filename);
+    
     analyze();
 };
 

@@ -17,6 +17,7 @@ int main(int argc, const char* argv[]){
     if(argc != 2) {
         return 1;
     }
-    Input_Parser inputParser = new Input_Parser(argv[1]);
+    Input_Parser input = new Input_Parser(argv[1]);
+    input.analyze(); 
     return 0;
 }
