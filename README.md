@@ -10,3 +10,5 @@ Our project consists of a main function that creates an InputParser. The InputPa
 
 It parses the commands and then completes actions based on the code.
 
+The approach we used is object oriented, as we created objects such as Job and Process. Many tasks within the code use the objects of Job and Process and their attributes to schedule them and keep the scheduling and queues in order.
+
