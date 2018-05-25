@@ -51,4 +51,15 @@ Input_Parser :: analyze() {
                 cout<<command<<" is not valid."<<endl;
         }
     }
+    
+    Job* process_arrival(vector<string> split_line){
+        int time, jobNo, memory, maxDemand, runTime, priority;
+        istringstream(split_line[1]) >> time;
+        istringstream(split_line[2].substr(2)) >> jobNo;
+        istringstream(split_line[3].substr(2)) >> memory;
+        istringstream(split_line[4].substr(2)) >> maxDemand;
+        istringstream(split_line[5].substr(2)) >> runTime;
+        istringstream(split_line[6].substr(2)) >> priority;
+        return new Job(time, jobNo ,memory,maxDemand,runTime,priority);
+    }
 }
