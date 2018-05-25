@@ -24,35 +24,27 @@ Input_Parser :: analyze() {
     for(string command : lines) {
         char  option = (char)line[0];
         switch(option) {
-            //System Configuration
             case 'C' :
                 int time, mainMemory, numOfSerialDevice, timeQuantum;
-
-                break;       // and exits the switch
-            //Job Arrival
+                createJob();
             case 'A' :
                 int jobNo,mainMemory, maxDemand, unitOfTime, priority;
-                break;
-            //Request for Devices
-                /*The example above states that at time 10, job number 5 releases one device. A job only releases devices when it is running on the CPU. Quantum is interrupted. One or more jobs may be taken off the Device Wait queue due to this.*/
+                createJob();
             case 'Q' :
                 int time, jobNo;
-                break;
-            //Release for Devices
+                createJob();
             case 'L' :
                 int time, jobNo, noOfDevices;
-                break;
-            //A display of the current system status in Readable format (with headings and properly aligned)
+                createJob();
             case 'D' :
                 int time;
-                cout<<"Some shit"<<endl;
-                break;
+                createJob();
             default :
                 cout<<command<<" is not valid."<<endl;
         }
     }
     
-    Job* process_arrival(vector<string> split_line){
+    Job* createJob(vector<string> split_line){
         int time, jobNo, memory, maxDemand, runTime, priority;
         istringstream(split_line[1]) >> time;
         istringstream(split_line[2].substr(2)) >> jobNo;
