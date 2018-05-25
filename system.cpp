@@ -39,7 +39,7 @@ int System::get_tot_dev(){return this->tot_dev;}
 int System::get_avail_dev(){return this->avail_dev;}
 int System::get_quantum(){return this->quantum;}
 int System::get_remaining_quantum(){return this->remaining_quantum;}
-int System::get_running_job_num(){return this->cpu==NULL?0:this->cpu->get_job_num();}
+int System::get_running_job_num(){return this->cpu==NULL?0:this->cpu->job_num();}
 float System::get_avg_turnaround_time(){
   int sum, n = 0;
   std::list<Process*>::iterator it;
@@ -69,23 +69,23 @@ void System::set_remaining_quantum(int remaining){this->remaining_quantum = rema
 
 bool sort_hold_q1(Job *job1, Job *job2){
   //hold queue 1 sort
-  if(job1->get_run_time() == job2->get_run_time()){
-  return job1->get_arr_time() < job2->get_arr_time();  // FIFO
+  if(job1->run_time() == job2->run_time()){
+  return job1.arrival_time < job2.arrival_time;  // FIFO
   } else {
-  return job1->get_run_time() < job2->get_run_time();  // SJF
+  return job1.run_time < job2.run_time;  // SJF
   }
 }
 
 bool sort_hold_q2(Job *job1, Job *job2){
   //hold queue 2 sort
-  return job1->get_arr_time() < job2->get_arr_time();  // FIFO
+  return job1.arrival_time < job2.arrival_time;  // FIFO
 }
 
 void System::submit(Job *job){
-  if(job->get_mem_req() > this->get_tot_mem() ||
-     job->get_max_dev() > this->get_tot_dev()){
-  } else if(job->get_mem_req() > this->get_avail_mem()) {
-    switch(job->get_priority()){
+  if(job.mem_needed > this->get_tot_mem() ||
+     job.max_dev > this->get_tot_dev()){
+  } else if(job.mem_needed > this->get_avail_mem()) {
+    switch(job.priority{
     case 1:
       this->hold_q1->push_back(job);
       this->hold_q1->sort(sort_hold_q1);
@@ -97,7 +97,7 @@ void System::submit(Job *job){
     }
   } else {
     this->ready_q->push_back(new Process(job));
-    this->set_avail_mem(this->get_avail_mem() - job->get_mem_req());
+    this->set_avail_mem(this->get_avail_mem() - job.mem_needed);
   }
 }
 
@@ -178,10 +178,10 @@ void System::run_quantum(){
 }
 
 void System::complete_job(int time, int job_num){
-  if(this->cpu->get_job_num() == job_num){
+  if(this->cpu.job_num == job_num){
     this->set_avail_dev(this->cpu->get_alloc_dev() + this->get_avail_dev());
     this->cpu->set_alloc_dev(0);
-    this->set_avail_mem(this->cpu->get_mem_req() + this->get_avail_mem());
+    this->set_avail_mem(this->cpu.mem_needed + this->get_avail_mem());
     this->cpu->set_compl_time(this->get_time());
     this->complete_q->push_back(this->cpu);
 
@@ -207,9 +207,9 @@ void System::complete_job(int time, int job_num){
     std::list<Job*>::iterator it2;
    if(!(this->hold_q1->empty())){
       for(it2 = this->hold_q1->begin(); it2 != this->hold_q1->end();){
-        if((*it2)->get_mem_req() <= this->get_avail_mem()){
+        if((*it2).mem_needed <= this->get_avail_mem()){
           this->ready_q->push_back(new Process(*it2));
-          this->set_avail_mem(this->get_avail_mem() - (*it2)->get_mem_req());
+          this->set_avail_mem(this->get_avail_mem() - (*it2).mem_needed);
           it2 = this->hold_q1->erase(it2);
         }
         else{it2++;}
@@ -218,9 +218,9 @@ void System::complete_job(int time, int job_num){
 
     if(!this->hold_q2->empty()){
       for(it2 = this->hold_q2->begin(); it2 != this->hold_q2->end();){
-        if((*it2)->get_mem_req() <= this->get_avail_mem()){
+        if((*it2).mem_needed <= this->get_avail_mem()){
           this->ready_q->push_back(new Process(*it2));
-          this->set_avail_mem(this->get_avail_mem() - (*it2)->get_mem_req());
+          this->set_avail_mem(this->get_avail_mem() - (*it2).mem_needed);
           it2 = this->hold_q2->erase(it2);
         }
         else{it2++;}
@@ -233,8 +233,8 @@ void System::complete_job(int time, int job_num){
 
 void System::swap_cpu_jobs(){
   if(this->cpu != NULL){
-    if(this->cpu->get_elap_time()>=this->cpu->get_run_time()){
-      this->complete_job(this->get_time(), this->cpu->get_job_num());
+    if(this->cpu->get_elap_time()>=this->cpu.run_time){
+      this->complete_job(this->get_time(), this->cpu.job_num);
     } else {
       this->ready_q->push_back(this->cpu);
     }
@@ -248,13 +248,13 @@ void System::swap_cpu_jobs(){
 }
 
 void System::request(int time, int job_num, int dev){
-  if(this->cpu != NULL && this->cpu->get_job_num() == job_num){
+  if(this->cpu != NULL && this->cpu.job_num == job_num){
     if(this->get_avail_dev() < dev){
       this->cpu->set_needed_dev(dev);
       this->wait_q->push_back(this->cpu);
       this->cpu = NULL;
       this->set_remaining_quantum(0);
-    } else if (this->cpu->get_max_dev() < this->cpu->get_alloc_dev() + dev) {
+    } else if (this->cpu.max_dev < this->cpu->get_alloc_dev() + dev) {
      
     } else {
       this->set_avail_dev(this->get_avail_dev()-dev);
@@ -277,7 +277,7 @@ void System::request(int time, int job_num, int dev){
 }
 
 void System::release(int time, int job_num, int dev){
-  if(this->cpu != NULL && this->cpu->get_job_num() == job_num
+  if(this->cpu != NULL && this->cpu.job_num == job_num
      && this->cpu->get_alloc_dev() >= dev){
     this->set_avail_dev(this->get_avail_dev()+dev);
     this->cpu->set_alloc_dev(this->cpu->get_alloc_dev()-dev);
@@ -321,21 +321,21 @@ bool System::is_safe(){
   int* j_nums = (int*) calloc(P, sizeof(int));
   int i = 0;
   for (iter=this->ready_q->begin();iter!=this->ready_q->end();iter++){
-      need[i] = (*iter)->get_max_dev() - (*iter)->get_alloc_dev();
+      need[i] = (*iter).max_dev - (*iter)->get_alloc_dev();
       alloc[i] = (*iter)->get_alloc_dev();
-      j_nums[i] = (*iter)->get_job_num();
+      j_nums[i] = (*iter).job_num;
       i++;
   }
   for (iter=this->wait_q->begin();iter!=this->wait_q->end();iter++){
-      need[i] = (*iter)->get_max_dev() - (*iter)->get_alloc_dev();
+      need[i] = (*iter).max_dev - (*iter)->get_alloc_dev();
       alloc[i] = (*iter)->get_alloc_dev();
-      j_nums[i] = (*iter)->get_job_num();
+      j_nums[i] = (*iter).job_num;
       i++;
   }
   if(this->cpu != NULL){
-    need[i] = this->cpu->get_max_dev() - this->cpu->get_alloc_dev();
+    need[i] = this->cpu.max_dev - this->cpu->get_alloc_dev();
     alloc[i] = this->cpu->get_alloc_dev();
-    j_nums[i] = this->cpu->get_job_num();
+    j_nums[i] = this->cpu.job_num;
   }
 
   bool* finish = (bool*) calloc(P, sizeof(bool));
