@@ -11,6 +11,13 @@
 		9C1ABC3420B66BE6003110A9 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		9C1ABC3520B66C0B003110A9 /* input_parser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = input_parser.cpp; sourceTree = "<group>"; };
 		9C1ABC3620B66C0B003110A9 /* input_parser.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = input_parser.hpp; sourceTree = "<group>"; };
+		9C1ABC3B20B79AAE003110A9 /* system.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = system.h; sourceTree = "<group>"; };
+		9C1ABC3C20B79AAF003110A9 /* process.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = process.cpp; sourceTree = "<group>"; };
+		9C1ABC3E20B79AAF003110A9 /* job.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = job.cpp; sourceTree = "<group>"; };
+		9C1ABC3F20B79AAF003110A9 /* job.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = job.h; sourceTree = "<group>"; };
+		9C1ABC4020B79AAF003110A9 /* process.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = process.h; sourceTree = "<group>"; };
+		9C1ABC4120B79AAF003110A9 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		9C1ABC4220B79AB0003110A9 /* system.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = system.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -20,6 +27,13 @@
 				9C1ABC3220B66B06003110A9 /* test.txt */,
 				9C1ABC3420B66BE6003110A9 /* main.cpp */,
 				9C1ABC3520B66C0B003110A9 /* input_parser.cpp */,
+				9C1ABC3E20B79AAF003110A9 /* job.cpp */,
+				9C1ABC3F20B79AAF003110A9 /* job.h */,
+				9C1ABC3C20B79AAF003110A9 /* process.cpp */,
+				9C1ABC4020B79AAF003110A9 /* process.h */,
+				9C1ABC4120B79AAF003110A9 /* README.md */,
+				9C1ABC4220B79AB0003110A9 /* system.cpp */,
+				9C1ABC3B20B79AAE003110A9 /* system.h */,
 				9C1ABC3620B66C0B003110A9 /* input_parser.hpp */,
 			);
 			sourceTree = "<group>";
