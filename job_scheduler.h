@@ -1,5 +1,5 @@
 /* Natalie Rubin & Ziyao Yan
- * system class header
+ * job scheduler header
  */
 
 #ifndef _SYSTEM_H

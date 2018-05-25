@@ -1,5 +1,5 @@
 /* Natalie Rubin & Ziyao Yan
- * system class
+ * job scheduler class
  */
 
 #include <fstream>
