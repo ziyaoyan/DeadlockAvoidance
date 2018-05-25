@@ -1,5 +1,5 @@
 /* Natalie Rubin, Ziyao Yan
- * job file
+ * job class
  */
 
 
@@ -8,12 +8,13 @@
 
 using namespace std;
 
-Job::Job(int arrival_time,
-         int job_num,
-         int mem_needed,
-         int max_dev,
-         int run_time,
-         int priority){
+Job::Job(public int arrival_time,
+         public int job_num,
+         public int mem_needed,
+         public int max_dev,
+         public int run_time,
+         public int priority){
+  
   this->arrival_time = arrival_time;
   this->job_num = job_num;
   this->mem_needed = mem_needed;
