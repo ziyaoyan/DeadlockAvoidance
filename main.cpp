@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include "input_parser.hpp"
+#include "job.h"
 
 using namespace std;
 
@@ -18,6 +19,6 @@ int main(int argc, const char* argv[]){
         return 1;
     }
     Input_Parser input = new Input_Parser(argv[1]);
-    input.analyze(); 
+    input.analyze();
     return 0;
 }
