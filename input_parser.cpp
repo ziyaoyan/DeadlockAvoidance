@@ -22,11 +22,12 @@ Input_Parse :: Input_Parser(string filename) {
 
 Input_Parser :: analyze() {
     for(string command : lines) {
-        char command = (char)line[0];
-        switch(command) {
+        char  option = (char)line[0];
+        switch(option) {
             //System Configuration
             case 'C' :
                 int time, mainMemory, numOfSerialDevice, timeQuantum;
+
                 break;       // and exits the switch
             //Job Arrival
             case 'A' :
@@ -35,7 +36,7 @@ Input_Parser :: analyze() {
             //Request for Devices
                 /*The example above states that at time 10, job number 5 releases one device. A job only releases devices when it is running on the CPU. Quantum is interrupted. One or more jobs may be taken off the Device Wait queue due to this.*/
             case 'Q' :
-                int time, jobNo,
+                int time, jobNo;
                 break;
             //Release for Devices
             case 'L' :
@@ -46,6 +47,8 @@ Input_Parser :: analyze() {
                 int time;
                 cout<<"Some shit"<<endl;
                 break;
+            default :
+                cout<<command<<" is not valid."<<endl;
         }
     }
 }
