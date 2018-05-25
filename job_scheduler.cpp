@@ -1,5 +1,5 @@
 /* Natalie Rubin & Ziyao Yan
- * system class implementation
+ * system class
  */
 
 #include <fstream>
@@ -69,7 +69,7 @@ void System::set_remaining_quantum(int remaining){this->remaining_quantum = rema
 
 bool sort_hold_q1(Job *job1, Job *job2){
   //hold queue 1 sort
-  if(job1->run_time() == job2->run_time()){
+  if(job1.run_time == job2.run_time){
   return job1.arrival_time < job2.arrival_time;  // FIFO
   } else {
   return job1.run_time < job2.run_time;  // SJF
